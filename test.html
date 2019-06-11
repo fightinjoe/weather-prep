@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Testing OpenWeatherMap</title>
+    <script type="text/javascript" src="weather.js"></script>
+    <style media="screen">
+      body {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+
+    <template id="city-weather">
+      <h1>City name</h1>
+      <ul class="foo">
+        <li><strong>Temp:</strong> <span></span></li>
+        <li><strong>Humidity:</strong> <span></span></li>
+        <li><strong>Tomorrow:</strong>
+          <table></table>
+        <li>
+      </ul>
+    </template>
+
+    <template id="forecast-row">
+      <tr>
+        <td>Time</td>
+        <td>Temp</td>
+        <td>Humidity</td>
+        <td>Pressure</td>
+      </tr>
+    </template>
+
+  </body>
+  <script type="text/javascript">
+
+    const getCityWeather = (zip) => {
+      Weather.current(zip, (d_current)=>{
+        let clone = createWeatherNode( d_current );
+        const table = clone.querySelector('table');
+        document.querySelector('body').appendChild(clone);
+
+        Weather.forecast(zip, (d_forecast)=>{
+          const timezone = d_forecast.city.timezone;
+
+          d_forecast.list.forEach( d_item =>
+            table.appendChild( createForecastNode(d_item, timezone) )
+          )
+        })
+
+      })
+    }
+
+    // display weather
+    const createWeatherNode = ( data ) => {
+      let template = document.querySelector('#city-weather');
+      let clone = document.importNode(template.content, true);
+
+      clone.querySelector('h1').innerHTML = data.name;
+
+      let stats = clone.querySelectorAll('span');
+      stats[0].innerHTML = `${data.main.temp}&deg;F`;
+      stats[1].innerHTML = data.main.humidity;
+
+      return clone;
+    }
+
+    const createForecastNode = (data, timezone) => {
+      let template = document.querySelector('#forecast-row');
+      let clone = document.importNode(template.content, true);
+
+      let tds = clone.querySelectorAll('td');
+
+      const date = new Date((data.dt + timezone*0)*1000);
+      tds[0].innerHTML = `${date.getMonth()}/${date.getDate()} ${date.getHours()}`;
+      tds[1].innerHTML = `${data.main.temp}&deg;F`;
+      tds[2].innerHTML = `${data.main.humidity}%`;
+      tds[3].innerHTML = data.main.pressure;
+
+      return clone;
+    }
+
+    getCityWeather(10003);
+    // getCityWeather(12737);
+
+    // Weather.forecast(10003, (d)=>{console.log(d)});
+  </script>
+</html>

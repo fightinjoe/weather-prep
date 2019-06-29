@@ -109,6 +109,8 @@ class Forecast {
       });
 
       this.showForecast( this.map.index );
+
+      this.overlay.addListener('click', this.handleClick);
     })
   }
 
@@ -120,5 +122,16 @@ class Forecast {
       strokeColor: "0000FF",
       fillColor:   "0000FF"
     })
+  }
+
+  handleClick = ()=>{
+    const elt = document.querySelector('#info');
+
+    let f = this.forecast[ this.map.index ];
+
+    elt.innerHTML = `
+      ${ this.city.name }:
+      ${ (f.rain ? f.rain['3h'] : 0) * 0.03937}"
+    `;
   }
 }

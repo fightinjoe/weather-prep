@@ -4,6 +4,8 @@ class Maps {
       elt, { center:position, zoom: 8 }
     );
 
+    this.index = 0;
+
     this.forecasts = [];
 
     // handle clicks
@@ -22,31 +24,13 @@ class Maps {
     this.forecasts.push( new Forecast( position, this) );
   }
 
-  // addMarkerAtLatLong = ( position, map ) => {
-  //   let marker = new google.maps.Marker({
-  //     position: position, map: map
-  //   })
-  // }
-  //
-  // drawCircleAtPosition = ( position, map ) => {
-  //   let circle = new google.maps.Circle({
-  //     strokeColor: '#FF0000',
-  //     strokeOpacity: 0.8,
-  //     strokeWeight: 2,
-  //     fillColor: '#FF0000',
-  //     fillOpacity: 0.35,
-  //     map: map,
-  //     center: position,
-  //     radius: 20000
-  //   });
-  //
-  //   Weather.forecastByGeo(
-  //     {lat: position.lat(), lng: position.lng()},
-  //     (d) => console.log(d)
-  //   )
-  //
-  //   return circle;
-  // }
+  next = ()=> {
+    this.index++;
+
+    this.forecasts.forEach( f =>{
+      f.showForecast( this.index );
+    })
+  }
 }
 
 Maps.loadAPI = ( callback ) => {
@@ -104,7 +88,7 @@ class Forecast {
         center: this.position
       });
 
-      this.showForecast(0);
+      this.showForecast( this.map.index );
     })
   }
 

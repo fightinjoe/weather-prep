@@ -49,6 +49,20 @@ const Weather = {
     Weather._ajax( url );
   },
 
+  forecastByGeo: ( position, callback ) => {
+    const type = "forecast";
+
+    const params = {
+      lat : position.lat,
+      lon : position.lng,
+      units: 'imperial'
+    };
+
+    const url = Weather._createURL( type, params, callback );
+
+    Weather._ajax( url );
+  },
+
   kelvinToFahrenheit: (k) => {
     let temp = (k - 273.15) * 9/5 + 32;
 

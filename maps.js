@@ -25,11 +25,31 @@ class Maps {
   }
 
   next = ()=> {
-    this.index++;
+    this.index = Math.min(this.index+1, this.forecasts[0].forecast.length-1);
 
     this.forecasts.forEach( f =>{
       f.showForecast( this.index );
-    })
+    });
+
+    this.printDate();
+  }
+
+  prev = ()=>{
+    this.index = Math.max(0, this.index-1);
+
+    this.forecasts.forEach( f =>{
+      f.showForecast( this.index );
+    });
+
+    this.printDate();
+  }
+
+  printDate = ()=>{
+    let f = this.forecasts[0];
+
+    let date = f.forecast[ this.index ].dt_txt;
+
+    document.querySelector('#date').innerHTML = date;
   }
 }
 

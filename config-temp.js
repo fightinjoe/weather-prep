@@ -1,3 +1,4 @@
 const Config = {
-  API_KEY: "enter OpenWeatherMap API key here"
+  WEATHER_API: "enter OpenWeatherMap API key here",
+  MAPS_API: "enter Google Maps API key here"
 }

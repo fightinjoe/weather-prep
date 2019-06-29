@@ -5,7 +5,7 @@ const Weather = {
   _createURL : ( type, params, callback ) => {
     const URL = 'http://api.openweathermap.org/data/2.5/';
 
-    params.APPID = Config.API_KEY;
+    params.APPID = Config.WEATHER_API;
 
     params.callback = `Weather.callbacks[${Weather.callbacks.length}]`;
     Weather.callbacks.push( callback );

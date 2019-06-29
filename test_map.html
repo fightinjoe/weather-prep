@@ -4,7 +4,7 @@
     <style>
        /* Set the size of the div element that contains the map */
       #map {
-        height: 400px;  /* The height is 400 pixels */
+        height: 800px;  /* The height is 400 pixels */
         width: 100%;  /* The width is the width of the web page */
        }
     </style>
@@ -19,8 +19,8 @@
   <script type="text/javascript">
     Maps.init(()=>{
       console.log('got here');
-      let m = Maps.drawMapAtLatLong( -25.344, 131.036, document.querySelector('#map'));
-      Maps.addMarkerAtLatLong( -25.344, 131.036, m );
+      let m = Maps.drawMapAtLatLong( Maps.locations.NewYork, document.querySelector('#map'));
+      Maps.addMarkerAtLatLong( Maps.locations.NewYork, m );
     })
   </script>
 </html>

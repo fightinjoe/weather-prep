@@ -29,17 +29,26 @@ const Maps = {
     document.getElementsByTagName('body')[0].appendChild(jsonp);
   },
 
-  drawMapAtLatLong : ( lat, lng, elt ) => {
+  drawMapAtLatLong : ( position, elt ) => {
     let map = new google.maps.Map(
-      elt, { center:{lat:lat, lng:lng}, zoom: 4 }
+      elt, { center:position, zoom: 8 }
     );
+
+    // handle clicks
+    map.addListener('click', (e)=>{
+      console.log({lat:e.latLng.lat(), lng:e.latLng.lng()});
+    })
 
     return map;
   },
 
-  addMarkerAtLatLong : ( lat, lng, map ) => {
+  addMarkerAtLatLong : ( position, map ) => {
     let marker = new google.maps.Marker({
-      position: {lat:lat, lng:lng}, map: map
+      position: position, map: map
     })
   }
+}
+
+Maps.locations = {
+  NewYork : { lat: 40.731, lng: -73.983 }
 }

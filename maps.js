@@ -36,7 +36,11 @@ const Maps = {
 
     // handle clicks
     map.addListener('click', (e)=>{
+      // log the lat / lng of the click
       console.log({lat:e.latLng.lat(), lng:e.latLng.lng()});
+
+      // draw a circle where clicked
+      Maps.drawCircleAtPosition( e.latLng, map );
     })
 
     return map;
@@ -45,6 +49,19 @@ const Maps = {
   addMarkerAtLatLong : ( position, map ) => {
     let marker = new google.maps.Marker({
       position: position, map: map
+    })
+  },
+
+  drawCircleAtPosition : ( position, map ) => {
+    let circle = new google.maps.Circle({
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35,
+      map: map,
+      center: position,
+      radius: 20000
     })
   }
 }
